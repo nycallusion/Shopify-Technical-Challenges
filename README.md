@@ -1,7 +1,7 @@
 # Shopify-Technical-Challenge-
 Shopify-Technical-Challenge!
 #Instructiotns got Replit
-### go yo https://replit.com/@DavidL6/Shopify-Technical-Challenges#server.js
+### go to https://replit.com/@DavidL6/Shopify-Technical-Challenges#server.js
 ### Click Run on the top right side.
 
 ##Instructions for local
