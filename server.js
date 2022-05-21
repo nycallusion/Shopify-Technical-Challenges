@@ -14,9 +14,20 @@ app.use(express.static(path.join(__dirname, './client/dist')));
 
 
 // Get all (cRud)
-app.get('/api', async(req, res, next) => {
+app.get('/api/warehouse', async(req, res, next) => {
     try {
-      
+        const data = db.readAll();
+        res.json(data);
+    }
+    catch(err){
+        next(err);
+    }
+});
+
+app.get('/api/:id', async(req, res, next) => {
+    try {
+        let item = db.findOne(req.params.id)
+        res.json(item);
     }
     catch(err){
         next(err);
@@ -26,28 +37,36 @@ app.get('/api', async(req, res, next) => {
   // Create (Crud)
 app.post('/api/warehouse', async(req, res, next) => {
     try {
-        let createWH = await db.createWH(req.body.val);
-        console.log(createWH)
+        let createWH = await db.createWH(req.body.warehouse);
+        res.json({
+            msg: 'Created',
+            data: createWH
+        })
     }
     catch(err){
         next(err);
     }
 });
 
-// Read one (cRud)
-app.get('/api/:id', async(req, res, next) => {
+app.post('/api', async(req, res, next) => {
     try {
-
+        let createItem = await db.createItem(req.body);
+        res.status(200).json({
+            msg: 'Created',
+            data: createItem
+        })
     }
     catch(err){
         next(err);
     }
 });
+
 
 // Update (crUd)
-app.put('/api/:id', async(req, res, next) => {
+app.put('/api', async(req, res, next) => {
     try {
-
+        db.update(req.body);
+        res.status(204).json({msg: 'item updated'});
     }
     catch(err){
         next(err);
@@ -55,9 +74,11 @@ app.put('/api/:id', async(req, res, next) => {
 });
 
 // Delete (cruD)
-app.delete('/api/:id', async(req, res, next) => {
+app.delete('/api/:warehouse/:id', async(req, res, next) => {
     try {
-
+        const {warehouse, id} = req.params;
+        db.delete(warehouse, id);
+        res.status(201).json({msg: 'item deleted'})
     }
     catch(err){
         next(err);
