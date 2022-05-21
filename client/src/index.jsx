@@ -61,7 +61,7 @@ export default function App() {
   const handleAddItem = async() => {
     try {
       resetMsg();
-      if (Number(quantity) < 1 || !inputs.name) return;
+      if (Number(inputs.quantity) < 1 || !inputs.name) return;
       let res = await axios.post('/api', {name: inputs.name, quantity: inputs.quantity, warehouse } , {
         headers: {
           'Content-Type': 'application/json'
